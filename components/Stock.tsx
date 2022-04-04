@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import config from "../config/config.json";
+import { useFonts, Roboto_400Regular, Roboto_300Light } from '@expo-google-fonts/roboto';
 
 
 function StockList() {
@@ -12,10 +13,10 @@ function StockList() {
           .then(result => setProducts(result.data));
         }, []);
 
-    const list = products.map((product, index) => <Text key={index}>{ product.name } - { product.stock }</Text>);
+    const list = products.map((product, index) => <Text key={index} style={{ fontSize: 16, fontFamily: 'Roboto_300Light', lineHeight: 20 }}>{ product.name } - { product.stock } st.</Text>);
 
     return (
-        <View>
+        <View style={styles.container}>
           {list}
         </View>
     );
@@ -24,8 +25,15 @@ function StockList() {
 export default function Stock() {
     return (
         <View>
-          <Text style={{color: '#333', fontSize: 24}}>Lagerförteckning</Text>
+          <Text style={{color: '#333', fontSize: 24, padding: 24, paddingBottom: 0, fontFamily: 'Roboto_900Black', lineHeight: 32 }}>Lagerförteckning</Text>
           <StockList/>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        color: '#333',
+        padding: 24,
+    }
+});
