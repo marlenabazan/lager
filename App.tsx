@@ -1,41 +1,47 @@
-// 4fa266c6d6a72576c94dd7a3e375c015
-
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import warehouse from './assets/nut.png';
-import Stock from './components/Stock.tsx';
-import { useFonts, Roboto_900Black } from '@expo-google-fonts/roboto';
+import Home from "./components/Home.tsx";
+import Pick from "./components/Pick.tsx";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { Base, Typography } from './styles';
+import { useState } from 'react';
 
+
+const Tab = createBottomTabNavigator();
+
+const routeIcons = {
+  "Lager": "home",
+  "Plock": "list",
+};
 
 export default function App() {
-    let [fontsLoaded] = useFonts({
-        Roboto_900Black,
-    });
+    const [products, setProducts] = useState([]);
 
     return (
-        <SafeAreaView style={styles.container}>
-          <ScrollView style={styles.base}>
-            <Text style={{ color: '#088015', fontSize: 42, padding: 24, textAlign: 'center', fontFamily: 'Roboto_900Black' }}>Lager-Appen</Text>
-            <Image source={warehouse} style={{ width: 280, alignSelf: 'center' }} />
-            <Stock />
-            <StatusBar style="auto" />
-          </ScrollView>
+        <SafeAreaView style={Base.container}>
+            <NavigationContainer>
+                <Tab.Navigator screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName = routeIcons[route.name] || "alert";
+
+                        return <Ionicons name={iconName} size={size} color={color} />;
+                        },
+                        tabBarActiveTintColor: 'blue',
+                        tabBarInactiveTintColor: 'gray',
+                        headerShown: false
+                        })}>
+                        <Tab.Screen name="Lager">
+                            {() => <Home products={products} setProducts={setProducts} />}
+                        </Tab.Screen>
+                        <Tab.Screen name="Plock">
+                            {() => <Pick setProducts={setProducts} />}
+                        </Tab.Screen>
+                </Tab.Navigator>
+            </NavigationContainer>
+        <StatusBar style="auto" />
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 24,
-        backgroundColor: '#4B4B4B',
-    },
-    base: {
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingLeft: 12,
-        paddingRight: 12,
-
-    }
-});
