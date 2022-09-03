@@ -10,7 +10,7 @@ export default function Home({ route, products, setProducts }) {
 
     return (
           <ScrollView style={Base.base}>
-            <Text style={Typography.header1}>Lager-Appen</Text>
+            <Text style={Typography.header1}>LAGER-APPEN</Text>
             <Image source={warehouse} style={Base.image} />
             <Stock products={products} setProducts={setProducts} />
           </ScrollView>

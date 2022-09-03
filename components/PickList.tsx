@@ -41,7 +41,6 @@ export default function PickList({ route, navigation, setProducts }) {
 
             {orderItemsList}
             {checkStock}
-
         </View>
     )
 };

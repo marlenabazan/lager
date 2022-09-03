@@ -9,7 +9,7 @@ function StockList({products, setProducts}) {
     useEffect(async () => {
         setProducts(await productModel.getProducts());
     }, []);
-
+ 
     // const [products, setProducts] = useState([]);
     //
     // useEffect(() => {

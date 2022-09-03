@@ -1,6 +1,6 @@
 export const header1 = {
     fontSize: 42,
-    color: '#088015',
+    color: '#228DF8',
     padding: 24,
     textAlign: 'center',
 };
@@ -20,6 +20,7 @@ export const header3 = {
     fontSize: 16,
     lineHeight: 20,
     paddingLeft: 24,
+    paddingTop: 16,
     fontWeight: 'bold',
 };
 
