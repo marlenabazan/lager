@@ -32,7 +32,7 @@ export default function DeliveriesList({ route, navigation }){
     });
 
     function deliveryListToPrint() {
-        console.log(listOfDeliveries.length)
+        // console.log(listOfDeliveries.length)
         if(listOfDeliveries.length > 0)
             return listOfDeliveries
         return <Text style = {Typography.header2}>Inleveranslistan är tom.

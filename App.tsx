@@ -10,19 +10,32 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Base, Typography } from './styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import Auth from "./components/auth/Auth";
+import Logout from "./components/auth/Logout";
+import authModel from "./models/auth";
+
+import Invoices from "./components/invoices/Invoices";
 
 
 const Tab = createBottomTabNavigator();
 
 const routeIcons = {
-  "Lager": "home",
+  "Lager": "home-outline",
   "Plock": "list",
-  "Inleveranser": "car",
+  "Inleveranser": "car-outline",
+  "Logga in": "lock-closed-outline",
+  "Faktura": "cash-outline",
 };
 
 export default function App() {
     const [products, setProducts] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+ 
+    useEffect(async () => {
+        setIsLoggedIn(await authModel.loggedIn());
+    }, []);
 
     return (
         <SafeAreaView style={Base.container}>
@@ -45,9 +58,22 @@ export default function App() {
                         </Tab.Screen>
                         <Tab.Screen name="Inleveranser" component={Deliveries}>
                         </Tab.Screen>
+                        {isLoggedIn ? 
+                            <Tab.Screen name="Faktura" component={Invoices} /> :
+                            <Tab.Screen name="Logga in">
+                                { () => <Auth setIsLoggedIn={setIsLoggedIn} /> }
+                            </Tab.Screen>
+                        }
+                        {isLoggedIn ? 
+                            <Tab.Screen name="Logga ut">
+                            { () => <Logout setIsLoggedIn={setIsLoggedIn} /> }
+                        </Tab.Screen> : null
+                        }
+                        
                 </Tab.Navigator>
             </NavigationContainer>
         <StatusBar style="auto" />
         </SafeAreaView>
     );
 }
+

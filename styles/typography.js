@@ -30,6 +30,12 @@ export const normal = {
     paddingLeft: 24,
 };
 
+export const label = {
+    fontSize: 16,
+    lineHeight: 20,
+    fontWeight: 'bold',
+}
+
 // export const normal = {
 //     fontSize: 20,
 //     marginBottom: 28,
