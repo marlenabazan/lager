@@ -27,6 +27,7 @@ const routeIcons = {
   "Lager": "home-outline",
   "Plock": "list",
   "Inleveranser": "car-outline",
+  "Ship": "send-outline",
   "Logga in": "lock-closed-outline",
   "Logga ut": "log-out-outline",
   "Faktura": "cash-outline",
