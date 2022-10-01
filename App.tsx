@@ -18,6 +18,8 @@ import authModel from "./models/auth";
 
 import Invoices from "./components/invoices/Invoices";
 
+import Ship from "./components/ship/Ship";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -59,6 +61,7 @@ export default function App() {
                         </Tab.Screen>
                         <Tab.Screen name="Inleveranser" component={Deliveries}>
                         </Tab.Screen>
+                        <Tab.Screen name="Ship" component={Ship} />
                         {isLoggedIn ? 
                             <Tab.Screen name="Faktura" component={Invoices} /> :
                             <Tab.Screen name="Logga in">
