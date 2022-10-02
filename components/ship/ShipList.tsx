@@ -29,7 +29,9 @@ export default function ShipList({ navigation, route }) {
                 title={order.name}
                 key={index}
                 onPress={() => {
-                    console.log(order);
+                    navigation.navigate("Order", {
+                        order: order
+                    })
                 }}
             />)
         });

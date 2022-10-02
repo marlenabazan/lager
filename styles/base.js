@@ -32,3 +32,8 @@ export const button = {
     borderColor: "#228DF8",
     backgroundColor: "pink",
 }
+
+export const details = {
+    padding: 12,
+    paddingLeft: 0,
+}
