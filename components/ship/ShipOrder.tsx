@@ -17,16 +17,13 @@ export default function ShipOrder({ route }) {
     const [locationMarker, setLocationMarker] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const map = useRef(null);
-    const [markerId, setMarkerId] = useState(null);
 
     useEffect(() => {
         (async () => {
             const results = await getCoordinates(`${order.address}, ${order.city}`);
 
-            setMarkerId(results[0].display_name);
-
             setMarker(<Marker
-                identifier={results[0].display_name}
+                identifier="there"
                 coordinate={{ latitude: parseFloat(results[0].lat), longitude: parseFloat(results[0].lon) }}
                 title={results[0].display_name}
             />);
@@ -41,7 +38,7 @@ export default function ShipOrder({ route }) {
                 setErrorMessage('Permission to access location was denied');
                 return;
             }
-    
+
             const currentLocation = await Location.getCurrentPositionAsync({});
     
             setLocationMarker(<Marker
@@ -56,10 +53,11 @@ export default function ShipOrder({ route }) {
         })();
     }, []);
 
-    function fitMarkers() {
+    async function fitMarkers() {
+        await Location.getCurrentPositionAsync({});
         if (map?.current && marker) {          
-            map.current.fitToSuppliedMarkers([markerId, "Min plats"], true)
-        }
+            map.current.fitToSuppliedMarkers(["there", "Min plats"], true)
+         }
     }
 
     return (
@@ -70,7 +68,6 @@ export default function ShipOrder({ route }) {
                 <Text style={Typography.normal}>{order.address}</Text>
                 <Text style={Typography.normal}>{order.zip} {order.city}</Text>
                 <Text style={Typography.normal}>{order.country}</Text>
-                
             </View>
             <View style={styles.container}>
                 <MapView
@@ -86,8 +83,8 @@ export default function ShipOrder({ route }) {
                     //     longitudeDelta: 2.1,
                     // }}
                     >
-                    {marker}
                     {locationMarker}
+                    {marker}
                 </MapView>
             </View>
         </View>
