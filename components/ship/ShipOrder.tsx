@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Base, Typography } from "../../styles";
+import { DataTable } from "react-native-paper";
 
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -15,12 +16,17 @@ export default function ShipOrder({ route }) {
     const [marker, setMarker] = useState(null);
     const [locationMarker, setLocationMarker] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
+    const map = useRef(null);
+    const [markerId, setMarkerId] = useState(null);
 
     useEffect(() => {
         (async () => {
             const results = await getCoordinates(`${order.address}, ${order.city}`);
 
+            setMarkerId(results[0].display_name);
+
             setMarker(<Marker
+                identifier={results[0].display_name}
                 coordinate={{ latitude: parseFloat(results[0].lat), longitude: parseFloat(results[0].lon) }}
                 title={results[0].display_name}
             />);
@@ -39,6 +45,7 @@ export default function ShipOrder({ route }) {
             const currentLocation = await Location.getCurrentPositionAsync({});
     
             setLocationMarker(<Marker
+                identifier="Min plats"
                 coordinate={{
                     latitude: currentLocation.coords.latitude,
                     longitude: currentLocation.coords.longitude
@@ -49,6 +56,12 @@ export default function ShipOrder({ route }) {
         })();
     }, []);
 
+    function fitMarkers() {
+        if (map?.current && marker) {          
+            map.current.fitToSuppliedMarkers([markerId, "Min plats"], true)
+        }
+    }
+
     return (
         <View style={Base.base}>
             <Text style={Typography.header2}>Skicka order</Text>
@@ -57,16 +70,22 @@ export default function ShipOrder({ route }) {
                 <Text style={Typography.normal}>{order.address}</Text>
                 <Text style={Typography.normal}>{order.zip} {order.city}</Text>
                 <Text style={Typography.normal}>{order.country}</Text>
+                
             </View>
             <View style={styles.container}>
                 <MapView
+                    ref={map}
+                    key={marker}
                     style={styles.map}
-                    initialRegion={{
-                        latitude: 56.1612,
-                        longitude: 15.5869,
-                        latitudeDelta: 0.1,
-                        longitudeDelta: 0.1,
-                    }}>
+                    onMapReady={fitMarkers}
+                    onMapLoaded={fitMarkers}
+                    // initialRegion={{
+                    //     latitude: 56.1612,
+                    //     longitude: 15.5869,
+                    //     latitudeDelta: 2.1,
+                    //     longitudeDelta: 2.1,
+                    // }}
+                    >
                     {marker}
                     {locationMarker}
                 </MapView>
