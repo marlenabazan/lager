@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Base, Typography } from "../../styles";
-import { DataTable } from "react-native-paper";
 
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
