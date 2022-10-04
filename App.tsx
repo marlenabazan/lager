@@ -8,17 +8,19 @@ import Deliveries from "./components/Deliveries";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import FlashMessage from "react-native-flash-message";
 
 import { Base, Typography } from './styles';
 import { useEffect, useState } from 'react';
 
 import Auth from "./components/auth/Auth";
 import Logout from "./components/auth/Logout";
+import Invoices from "./components/invoices/Invoices";
+import Ship from "./components/ship/Ship";
+
 import authModel from "./models/auth";
 
-import Invoices from "./components/invoices/Invoices";
 
-import Ship from "./components/ship/Ship";
 
 
 const Tab = createBottomTabNavigator();
@@ -78,6 +80,7 @@ export default function App() {
                 </Tab.Navigator>
             </NavigationContainer>
         <StatusBar style="auto" />
+        <FlashMessage position="top" />
         </SafeAreaView>
     );
 }

@@ -44,9 +44,24 @@ const auth = {
         });
 
         const result = await response.json()
+
+        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+            return {
+                title: result.errors.title,
+                message: result.errors.detail,
+                type: "danger",
+            };
+        }
+
         await storage.storeToken(result.data.token);
+
+        return {
+            title: "Inloggning",
+            message: result.data.message,
+            type: "success",
+        };
         
-        return result.data.message;
+        // return result.data.message;
         
     },
     logout: async function logout() {
