@@ -8,13 +8,28 @@ import deliveryModel from "../models/deliveries";
 
 import Delivery from '../interfaces/delivery';
 
+import { showMessage } from "react-native-flash-message";
+
 
 export default function DeliveryForm({ navigation }) {
     const [delivery, setDelivery] = useState<Partial<Delivery>>({});
     const [currentProduct, setCurrentProduct] = useState({});
 
     async function addDelivery() {
-        await deliveryModel.addDelivery(delivery);
+        if (delivery.amount === undefined || delivery.amount < 1) {
+            showMessage({
+                message: "Något saknas",
+                description: "Antalet ska vara större än 0",
+                type: "warning",
+            });
+        } else if (delivery.comment === undefined) {
+            showMessage({
+                message: "Något saknas",
+                description: "Comment ska vara ifylld",
+                type: "warning",
+            });
+        } else {
+            await deliveryModel.addDelivery(delivery);
 
         const updatedProduct = {
             ...currentProduct,
@@ -24,6 +39,7 @@ export default function DeliveryForm({ navigation }) {
         await productModel.updateProduct(updatedProduct);
 
         navigation.navigate("List", { reload: true });
+        }
     }
 
     return (

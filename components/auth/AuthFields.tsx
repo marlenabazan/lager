@@ -51,6 +51,7 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
+                testID="email-field"
             />
 
             <Text style={Typography.label}>Lösenord</Text>
@@ -64,6 +65,7 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
                 secureTextEntry={true}
                 autoCapitalize="none"
                 autoCorrect={false}
+                testID="password-field"
             />
 
             <Button

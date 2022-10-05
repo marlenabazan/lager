@@ -21,6 +21,6 @@ test('List should contain three items', async () => {
     expect(soap).toBeDefined();
 });
 
-const { getByText, debug } = render(<StockList products={products} setProducts={setProducts} />);
+// const { getByText, debug } = render(<StockList products={products} setProducts={setProducts} />);
 
-debug("Stocklist component");
+// debug("Stocklist component");
