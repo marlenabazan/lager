@@ -67,6 +67,7 @@ export default function DeliveryForm({ navigation }) {
                 }}
                 value={delivery?.amount?.toString()}
                 keyboardType="numeric"
+                testID="amount"
             />
 
 
@@ -77,6 +78,7 @@ export default function DeliveryForm({ navigation }) {
                     setDelivery({ ...delivery, comment: content }) // delivery - ett objekt som innehåller komment med <komment> i sig
                 }}
                 value={delivery?.comment}
+                testID="comment"
             />
 
             <Button
@@ -84,6 +86,7 @@ export default function DeliveryForm({ navigation }) {
                 onPress={() => {
                     addDelivery();
                 }}
+                testID="create"
             />
         </ScrollView>
     );
@@ -109,7 +112,8 @@ function ProductDropDown(props) {
             onValueChange={(itemValue) => {
                 props.setDelivery({ ...props.delivery, product_id: itemValue });
                 props.setCurrentProduct(productsHash[itemValue]);
-            }}>
+            }}
+            testID="productDropDown">
             {itemsList}
         </Picker>
     );
@@ -125,7 +129,7 @@ function DateDropDown(props) {
     };
 
     return (
-        <View>
+        <View testID="dateDropDown">
             {Platform.OS === "android" && (
                 <Button onPress={showDatePicker} title="Visa datumväljare" />
             )}
